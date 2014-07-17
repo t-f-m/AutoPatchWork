@@ -673,6 +673,7 @@
       if (htmlDoc.querySelector('title')) {
         a.setAttribute('title', htmlDoc.querySelector('title').textContent.trim());
       }
+      var elementHeight = pageElementHight(insert_point);
       append_point.insertBefore(root, insert_point);
       var docHeight = documentHeight();
       var docs = get_next_elements(htmlDoc);
@@ -699,7 +700,7 @@
         docs[i] = insert_node;
       });
       if (status.bottom) status.bottom.style.height = Root.scrollHeight + 'px';
-      if (docHeight === documentHeight()) {
+      if (docHeight === documentHeight() && elementHeight === pageElementHeight(insert_point)) {
         return dispatch_event('AutoPatchWork.error', {message: 'missing next page contents'});
       }
       next = get_next(htmlDoc);
@@ -723,6 +724,10 @@
 
     function documentHeight() {
       return Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
+    }
+    
+    function pageElementHeight(insert_point) {
+      return 0//Math.max();
     }
 
     function createXHTML(str) {
